@@ -23,13 +23,51 @@
                     </div><!-- /.col -->
                 </div><!-- /.row -->
                 <div class="row">
-                    <div class="col-md-6"></div>
                     <div class="col-md-6">
-                        <div class="d-flex">
-                            <input type="search" required v-model="searchQuery" class="form-control"
-                                placeholder="ຊອກຫາ...">
-                            <button @click="SearchAdmin" class="btn btn-primary ml-2"><i
-                                    class="fas fa-search"></i></button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex mb-1">
+                                    <input type="text" required v-model="searchQueryEight_Nine" class="form-control"
+                                        placeholder="8-9">
+                                    <button @click="SearchDaily" class="btn btn-primary ml-2"><i
+                                            class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex mb-1">
+                                    <input type="text" required v-model="searchQueryThirteen_Fourteen" class="form-control"
+                                        placeholder="13-14">
+                                    <button @click="SearchDaily" class="btn btn-primary ml-2"><i
+                                            class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex mb-1">
+                                    <select name="" id="" class="form-control" v-model="searchQueryDays">
+                                                <option value="ຈັນ">-- ຈັນ --</option>
+                                                <option value="ອັງຄານ">-- ອັງຄານ --</option>
+                                                <option value="ພຸດ">-- ພຸດ --</option>
+                                                <option value="ພະຫັດ">-- ພະຫັດ --</option>
+                                                <option value="ສຸກ">-- ສຸກ --</option>
+                                                <option value="ເສົາ">-- ເສົາ --</option>
+                                                <option value="ທິດ">-- ທິດ --</option>
+                                    </select>
+                                    <button @click="SearchDaily" class="btn btn-primary ml-2"><i
+                                            class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex mb-1">
+                                    <input type="" required v-model="searchQueryDate" class="form-control"
+                                        placeholder="ຊອກຫາ...">
+                                    <button @click="SearchDaily" class="btn btn-primary ml-2"><i
+                                            class="fas fa-search"></i></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -41,7 +79,7 @@
         <section class="content">
             <div class="container">
                 <!-- Small boxes (Stat box) -->
-                <button class="btn btn-primary mb-2"><i class="fas fa-plus mr-2"></i>ເພີ່ມໃໝ່</button>
+                <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#modal-add-daily"><i class="fas fa-plus mr-2"></i>ເພີ່ມໃໝ່</button>
                 <div class="overflow-auto">
                     <table class="table table-striped table-hover w-100">
                         <thead>
@@ -101,51 +139,310 @@
                                 <td>{{ daily.created_at }}</td>
                                 <td>{{ daily.updated_at }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-success"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                    <button class="btn btn-sm btn-success" @click="ShowDailyItem(daily.DL_ID)" data-toggle="modal" data-target="#modal-edit-daily"><i class="fas fa-edit"></i></button>
+                                    <button @click="ConfirmDelete(daily.DL_ID)" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
 
                         </tbody>
                     </table>
                 </div>
-                <div class="modal fade" id="modal-info">
-                    <div class="modal-dialog modal-lg">
+                <div class="modal fade" id="modal-add-daily">
+                    <div class="modal-dialog modal-xl">
                         <div class="modal-content">
-                            <div class="modal-header bg-info">
-                                <h4 class="modal-title">ຟອມແກ້ໄຂຂໍ້ມູນແອັດມິນ</h4>
+                            <div class="modal-header bg-primary">
+                                <h4 class="modal-title">ຟອມເພີ່ມການບັນທຶກປະຈຳວັນ</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form enctype="multipart/form-data" @submit.prevent="UpdateAdmin">
+                            <form enctype="multipart/form-data" @submit.prevent="CreateDaily">
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="form-group ml-3 mb-3">
-                                            <label for="exampleInputEmail1">ຊື່:<span
+                                            <label for="exampleInputEmail1">5-6:<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" required v-model="updateusername"
+                                            <input type="text" class="form-control" required v-model="five_six"
                                                 id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
                                         </div>
                                         <div class="form-group ml-3 mb-3">
-                                            <label for="exampleInputEmail1">ອີເມວ:<span
+                                            <label for="exampleInputEmail1">6-7:<span
                                                     class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" required v-model="updateemail"
-                                                id="exampleInputEmail1" placeholder="email@gmail.com">
+                                            <input type="text" class="form-control" required v-model="six_seven"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
                                         </div>
                                         <div class="form-group ml-3 mb-3">
-                                            <label for="exampleInputPassword1">ລະຫັດຜ່ານ:<span
+                                            <label for="exampleInputEmail1">7-8:<span
                                                     class="text-danger">*</span></label>
-                                            <input type="password" class="form-control" required
-                                                v-model="updatepassword" id="exampleInputPassword1"
-                                                placeholder="*******">
+                                            <input type="text" class="form-control" required v-model="seven_eight"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
                                         </div>
                                         <div class="form-group ml-3 mb-3">
-                                            <label for="exampleInputPassword1">ເບີໂທ:<span
+                                            <label for="exampleInputEmail1">8-9:<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" required v-model="updatephone"
-                                                id="exampleInputPassword1" placeholder="0207x xxx xxx">
+                                            <input type="text" class="form-control" required v-model="eight_nine"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
                                         </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">9-10:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="nine_ten"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">10-11:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="ten_eleven"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">11-12:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="eleven_twelve"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">12-13:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="twelve_thirteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">13-14:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="thirteen_fourteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">14-15:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="fourteen_fifteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">15-16:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="fifteen_sixteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">16-17:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="sixteen_seventeen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">17-18:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="seventeen_eighteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">18-19:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="eighteen_nineteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">19-20:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="nineteen_twenty"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">20-21:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="twenty_twentyone"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">21-22:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="twentyone_twentytwo"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">22-23:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="twentytwo_twentythree"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">23-5:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="twentythree_five"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">ວັນ:<span
+                                                    class="text-danger">*</span></label>
+                                            <select name="" id="" class="form-control" required v-model="days">
+                                                <option value="ຈັນ">-- ຈັນ --</option>
+                                                <option value="ອັງຄານ">-- ອັງຄານ --</option>
+                                                <option value="ພຸດ">-- ພຸດ --</option>
+                                                <option value="ພະຫັດ">-- ພະຫັດ --</option>
+                                                <option value="ສຸກ">-- ສຸກ --</option>
+                                                <option value="ເສົາ">-- ເສົາ --</option>
+                                                <option value="ທິດ">-- ທິດ --</option>
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                            class="fas fa-times mr-1"></i>ຍົກເລີກ</button>
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-print mr-1"></i>
+                                        ບັນທຶກ</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <div class="modal fade" id="modal-edit-daily">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header bg-info">
+                                <h4 class="modal-title">ຟອມແກ້ໄຂການບັນທຶກປະຈຳວັນ</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form enctype="multipart/form-data" @submit.prevent="UpdateDaily">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">5-6:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_five_six"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">6-7:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_six_seven"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">7-8:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_seven_eight"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">8-9:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_eight_nine"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">9-10:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_nine_ten"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">10-11:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_ten_eleven"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">11-12:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_eleven_twelve"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">12-13:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_twelve_thirteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">13-14:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_thirteen_fourteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">14-15:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_fourteen_fifteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">15-16:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_fifteen_sixteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">16-17:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_sixteen_seventeen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">17-18:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_seventeen_eighteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">18-19:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_eighteen_nineteen"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">19-20:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_nineteen_twenty"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">20-21:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_twenty_twentyone"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">21-22:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_twentyone_twentytwo"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">22-23:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_twentytwo_twentythree"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">23-5:<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required v-model="update_twentythree_five"
+                                                id="exampleInputEmail1" placeholder="ກະລຸນາປ້ອນຊື່">
+                                        </div>
+                                        
+                                        <div class="form-group ml-3 mb-3">
+                                            <label for="exampleInputEmail1">ວັນ:<span
+                                                    class="text-danger">*</span></label>
+                                            <select name="" id="" class="form-control" required v-model="update_days">
+                                                <option value="ຈັນ">-- ຈັນ --</option>
+                                                <option value="ອັງຄານ">-- ອັງຄານ --</option>
+                                                <option value="ພຸດ">-- ພຸດ --</option>
+                                                <option value="ພະຫັດ">-- ພະຫັດ --</option>
+                                                <option value="ສຸກ">-- ສຸກ --</option>
+                                                <option value="ເສົາ">-- ເສົາ --</option>
+                                                <option value="ທິດ">-- ທິດ --</option>
+                                            </select>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
@@ -224,7 +521,11 @@ export default {
 
             Daily_ID: null,
             dailies: [],
-            searchQuery: ''
+            searchQueryEight_Nine: '',
+            searchQueryThirteen_Fourteen: '',
+            searchQueryDays: '',
+            searchQueryDate: '',
+            none_data: false
         }
 
     },
@@ -251,18 +552,34 @@ export default {
         },
 
         // Function Create Admin
-        async CreateAdmin() {
+        async CreateDaily() {
             try {
-                const response = await axios.post('http://localhost:3000/api/create-admin', {
-                    username: this.username,
-                    email: this.email,
-                    password: this.password,
-                    phone: this.phone
+                const response = await axios.post('http://localhost:3000/api/create-daily', {
+                    five_six: this.five_six,
+                    six_seven: this.six_seven,
+                    seven_eight: this.seven_eight,
+                    eight_nine: this.eight_nine,
+                    nine_ten: this.nine_ten,
+                    ten_eleven: this.ten_eleven,
+                    eleven_twelve: this.eleven_twelve,
+                    twelve_thirteen: this.twelve_thirteen,
+                    thirteen_fourteen: this.thirteen_fourteen,
+                    fourteen_fifteen: this.fourteen_fifteen,
+                    fifteen_sixteen: this.fifteen_sixteen,
+                    sixteen_seventeen: this.sixteen_seventeen,
+                    seventeen_eighteen: this.seventeen_eighteen,
+                    eighteen_nineteen: this.eighteen_nineteen,
+                    nineteen_twenty: this.nineteen_twenty,
+                    twenty_twentyone: this.twenty_twentyone,
+                    twentyone_twentytwo: this.twentyone_twentytwo,
+                    twentytwo_twentythree: this.twentytwo_twentythree,
+                    twentythree_five: this.twentythree_five,
+                    days: this.days
                 });
                 console.log(response.data);
-                this.ShowAdmins();
+                this.ShowDailies();
                 this.ShowSuccessMessage();
-                this.ResetAdmin_Form();
+                this.ResetDaily_Form();
             } catch (error) {
                 console.error('Error create admin', error);
                 this.ShowErrorMessage();
@@ -270,34 +587,60 @@ export default {
         },
 
         // Function Reset Admin Form
-        async ResetAdmin_Form() {
-            this.username = "",
-                this.email = "",
-                this.password = "",
-                this.phone = ""
+        async ResetDaily_Form() {
+            this.five_six = '',
+            this.six_seven = '',
+            this.seven_eight = '',
+            this.eight_nine = '',
+            this.nine_ten = '',
+            this.ten_eleven = '',
+            this.eleven_twelve = '',
+            this.twelve_thirteen = '',
+            this.thirteen_fourteen = '',
+            this.fourteen_fifteen = '',
+            this.fifteen_sixteen = '',
+            this.sixteen_seventeen = '',
+            this.seventeen_eighteen = '',
+            this.eighteen_nineteen = '',
+            this.nineteen_twenty = '',
+            this.twenty_twentyone = '',
+            this.twentyone_twentytwo = '',
+            this.twentytwo_twentythree = '',
+            this.twentythree_five = '',
+            this.days = ''
         },
 
-        async SearchAdmin() {
+        async SearchDaily() {
             const params = new URLSearchParams();
-            params.append('username', this.searchQuery,
-                'email', this.searchQuery,
-                'phone', this.searchQuery
-            );
+            if(this.searchQueryEight_Nine){
+                params.append('eight_nine',this.searchQueryEight_Nine);
+            }
+            if(this.searchQueryThirteen_Fourteen){
+                params.append('thirteen_fourteen',this.searchQueryThirteen_Fourteen)
+            }
+            if(this.searchQueryDays){
+                params.append('days',this.searchQueryDays)
+            }
+            if(this.searchQueryDate){
+                params.append('created_at',this.searchQueryDate)
+            }
 
-            fetch(`http://localhost:3000/api/search-admin?${params.toString()}`)
+            fetch(`http://localhost:3000/api/search-daily?${params.toString()}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    this.admins = data;
+                    this.dailies = data;
+                    this.none_data = data.length === 0;
                 })
                 .catch((error) => {
                     console.error('Search error', error);
+                    this.none_data = true;
                 });
         },
 
-        async ConfirmDelete(Admin_ID) {
+        async ConfirmDelete(Daily_ID) {
             Swal.fire({
                 title: 'ຕ້ອງການລຶບແທ້ ຫຼື ບໍ່?',
-                text: 'ທ່ານແນ່ໃຈບໍ ທີ່ຈະລຶບລະຫັດທີ່:' + Admin_ID,
+                text: 'ທ່ານແນ່ໃຈບໍ ທີ່ຈະລຶບລະຫັດທີ່:' + Daily_ID,
                 icon: 'warning',
                 showCancelButton: true,
                 cancelButtonText: 'ຍົກເລີກ',
@@ -306,14 +649,14 @@ export default {
                 confirmButtonText: 'ຢືນຢັນ!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.DeleteAdmin(Admin_ID);
+                    this.DeleteDaily(Daily_ID);
                 }
             });
         },
 
-        async DeleteAdmin(Admin_ID) {
+        async DeleteDaily(Daily_ID) {
             try {
-                const response = await axios.delete(`http://localhost:3000/api/delete-admin/${Admin_ID}`);
+                const response = await axios.put(`http://localhost:3000/api/delete-daily/${Daily_ID}`);
                 console.log(response.data);
                 Swal.fire({
                     title: 'ລົບລ້າງ!',
@@ -325,7 +668,7 @@ export default {
                         Swal.showLoading();
                     }
                 }).then(() => {
-                    this.ShowAdmins();
+                    this.ShowDailies();
                 });
             } catch (error) {
                 console.error('Error deleting admin', error);
@@ -343,32 +686,65 @@ export default {
         },
 
         // Function Show Admin Item
-        async ShowAdminItem(Admin_ID) {
-            this.Admin_ID = Admin_ID;
+        async ShowDailyItem(Daily_ID) {
+            this.Daily_ID = Daily_ID;
             try {
-                const response = await axios.get(`http://localhost:3000/api/admin/${Admin_ID}`);
-                this.updateusername = response.data.username,
-                    this.updateemail = response.data.email,
-                    this.updatepassword = "",
-                    this.updatephone = response.data.phone
+                const response = await axios.get(`http://localhost:3000/api/daily/${Daily_ID}`);
+                
+                    this.update_five_six = response.data.five_six
+                    this.update_six_seven = response.data.six_seven
+                    this.update_seven_eight = response.data.seven_eight
+                    this.update_eight_nine = response.data.eight_nine
+                    this.update_nine_ten = response.data.nine_ten
+                    this.update_ten_eleven = response.data.ten_eleven
+                    this.update_eleven_twelve = response.data.eleven_twelve
+                    this.update_twelve_thirteen = response.data.twelve_thirteen
+                    this.update_thirteen_fourteen = response.data.thirteen_fourteen
+                    this.update_fourteen_fifteen = response.data.fourteen_fifteen
+                    this.update_fifteen_sixteen = response.data.fifteen_sixteen
+                    this.update_sixteen_seventeen = response.data.sixteen_seventeen
+                    this.update_seventeen_eighteen = response.data.seventeen_eighteen
+                    this.update_eighteen_nineteen = response.data.eighteen_nineteen
+                    this.update_nineteen_twenty = response.data.nineteen_twenty
+                    this.update_twenty_twentyone = response.data.twenty_twentyone
+                    this.update_twentyone_twentytwo = response.data.twentyone_twentytwo
+                    this.update_twentytwo_twentythree = response.data.twentytwo_twentythree
+                    this.update_twentythree_five = response.data.twentythree_five
+                    this.update_days = response.data.days
             } catch (error) {
                 console.error(error.response.data);
             }
         },
 
         // Function Update Admin
-        async UpdateAdmin() {
+        async UpdateDaily() {
             try {
-                const response = await axios.put(`http://localhost:3000/api/update-admin/${this.Admin_ID}`, {
-                    username: this.updateusername,
-                    email: this.updateemail,
-                    password: this.updatepassword,
-                    phone: this.updatephone,
+                const response = await axios.put(`http://localhost:3000/api/update-daily/${this.Daily_ID}`, {
+                    five_six: this.update_five_six,
+                    six_seven: this.update_six_seven,
+                    seven_eight: this.update_seven_eight,
+                    eight_nine: this.update_eight_nine,
+                    nine_ten: this.update_nine_ten,
+                    ten_eleven: this.update_ten_eleven,
+                    eleven_twelve: this.update_eleven_twelve,
+                    twelve_thirteen: this.update_twelve_thirteen,
+                    thirteen_fourteen: this.update_thirteen_fourteen,
+                    fourteen_fifteen: this.update_fourteen_fifteen,
+                    fifteen_sixteen: this.update_fifteen_sixteen,
+                    sixteen_seventeen: this.update_sixteen_seventeen,
+                    seventeen_eighteen: this.update_seventeen_eighteen,
+                    eighteen_nineteen: this.update_eighteen_nineteen,
+                    nineteen_twenty: this.update_nineteen_twenty,
+                    twenty_twentyone: this.update_twenty_twentyone,
+                    twentyone_twentytwo: this.update_twentyone_twentytwo,
+                    twentytwo_twentythree: this.update_twentytwo_twentythree,
+                    twentythree_five: this.update_twentythree_five,
+                    days: this.update_days
                 });
                 console.log(response.data);
-                this.$router.push('/admin');
+                this.$router.push('/dailies');
                 this.ShowUpdateMessage();
-                this.ShowAdmins();
+                this.ShowDailies();
             } catch (error) {
                 console.error(error.response.data)
                 this.ShowErrorMessage();

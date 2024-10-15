@@ -404,7 +404,7 @@ export default {
         // Function Show Module
         async ShowIncome() {
             try {
-                const response = await axios.get('http://localhost:3000/api/select-income');
+                const response = await axios.get('https://nodejsbackenddailies.onrender.com/api/select-income');
                 if (Array.isArray(response.data)) {
                     this.incomes_s = response.data;
                 } else {
@@ -416,7 +416,7 @@ export default {
         },
         async ShowExpense() {
             try {
-                const response = await axios.get('http://localhost:3000/api/select-expense');
+                const response = await axios.get('https://nodejsbackenddailies.onrender.com/api/select-expense');
                 if (Array.isArray(response.data)) {
                     this.expenses_s = response.data;
                 } else {
@@ -430,7 +430,7 @@ export default {
         // Function Create Admin
         async CreateIncome() {
             try {
-                const response = await axios.post('http://localhost:3000/api/create-income', {
+                const response = await axios.post('https://nodejsbackenddailies.onrender.com/api/create-income', {
                     income: this.income,
                     income_reason: this.income_reason,
                     status: this.status
@@ -446,7 +446,7 @@ export default {
         },
         async CreateExpense() {
             try {
-                const response = await axios.post('http://localhost:3000/api/create-expense', {
+                const response = await axios.post('https://nodejsbackenddailies.onrender.com/api/create-expense', {
                     expense: this.expense,
                     expense_reason: this.expense_reason,
                     status: this.status
@@ -518,7 +518,7 @@ export default {
 
         async DeleteIncome(Income_ID) {
             try {
-                const response = await axios.delete(`http://localhost:3000/api/delete-income/${Income_ID}`);
+                const response = await axios.delete(`https://nodejsbackenddailies.onrender.com/api/delete-income/${Income_ID}`);
                 console.log(response.data);
                 Swal.fire({
                     title: 'ລົບລ້າງ!',
@@ -548,7 +548,7 @@ export default {
         },
         async DeleteExpense(Expense_ID) {
             try {
-                const response = await axios.delete(`http://localhost:3000/api/delete-expense/${Expense_ID}`);
+                const response = await axios.delete(`https://nodejsbackenddailies.onrender.com/api/delete-expense/${Expense_ID}`);
                 console.log(response.data);
                 Swal.fire({
                     title: 'ລົບລ້າງ!',
@@ -587,7 +587,7 @@ export default {
                 params.append('income_reason',this.searchQueryIncomeReason)
             }
             
-            fetch(`http://localhost:3000/api/search-income?${params.toString()}`)
+            fetch(`https://nodejsbackenddailies.onrender.com/api/search-income?${params.toString()}`)
                 .then((response) => response.json())
                 .then((data) => {
                     this.incomes_s = data;
@@ -609,7 +609,7 @@ export default {
                 params.append('expense_reason',this.searchQueryExpenseReason)
             }
             
-            fetch(`http://localhost:3000/api/search-expense?${params.toString()}`)
+            fetch(`https://nodejsbackenddailies.onrender.com/api/search-expense?${params.toString()}`)
                 .then((response) => response.json())
                 .then((data) => {
                     this.expenses_s = data;
@@ -624,7 +624,7 @@ export default {
         async ShowIncomeItem(Income_ID) {
             this.Income_ID = Income_ID;
             try {
-                const response = await axios.get(`http://localhost:3000/api/income/${Income_ID}`);
+                const response = await axios.get(`https://nodejsbackenddailies.onrender.com/api/income/${Income_ID}`);
                 this.updateincome = response.data.income,
                     this.updateincome_reason = response.data.income_reason,
                     this.updatestatus = response.data.status
@@ -635,7 +635,7 @@ export default {
         async ShowExpenseItem(Expense_ID) {
             this.Expense_ID = Expense_ID;
             try {
-                const response = await axios.get(`http://localhost:3000/api/expense/${Expense_ID}`);
+                const response = await axios.get(`https://nodejsbackenddailies.onrender.com/api/expense/${Expense_ID}`);
                 this.updateexpense = response.data.expense,
                     this.updateexpense_reason = response.data.expense_reason,
                     this.updatestatus = response.data.status
@@ -647,7 +647,7 @@ export default {
         // Function Update Module
         async UpdateIncome() {
             try {
-                const response = await axios.put(`http://localhost:3000/api/update-income/${this.Income_ID}`, {
+                const response = await axios.put(`https://nodejsbackenddailies.onrender.com/api/update-income/${this.Income_ID}`, {
                     income: this.updateincome,
                     income_reason: this.updateincome_reason,
                     status: this.updatestatus
@@ -663,7 +663,7 @@ export default {
         },
         async UpdateExpense() {
             try {
-                const response = await axios.put(`http://localhost:3000/api/update-expense/${this.Expense_ID}`, {
+                const response = await axios.put(`https://nodejsbackenddailies.onrender.com/api/update-expense/${this.Expense_ID}`, {
                     expense: this.updateexpense,
                     expense_reason: this.updateexpense_reason,
                     status: this.updatestatus

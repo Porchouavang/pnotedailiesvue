@@ -193,7 +193,7 @@
       // Function Show Admin
       async ShowPlanSuccess() {
         try {
-          const response = await axios.get('http://localhost:3000/api/select-plan-success');
+          const response = await axios.get('https://nodejsbackenddailies.onrender.com/api/select-plan-success');
           if (Array.isArray(response.data)) {
             this.plans = response.data;
           } else {
@@ -216,7 +216,7 @@
                 params.append('percent',this.searchQuerypercent)
             }
             
-            fetch(`http://localhost:3000/api/search-plans?${params.toString()}`)
+            fetch(`https://nodejsbackenddailies.onrender.com/api/search-plans?${params.toString()}`)
                 .then((response) => response.json())
                 .then((data) => {
                     this.plans = data;
@@ -247,7 +247,7 @@
   
       async DeletePlan(Plan_ID) {
         try {
-          const response = await axios.delete(`http://localhost:3000/api/delete-plan/${Plan_ID}`);
+          const response = await axios.delete(`https://nodejsbackenddailies.onrender.com/api/delete-plan/${Plan_ID}`);
           console.log(response.data);
           Swal.fire({
             title: 'ລົບລ້າງ!',
@@ -280,7 +280,7 @@
       async ShowPlanItem(Plan_ID){
         this.Plan_ID = Plan_ID;
         try {
-          const response = await axios.get(`http://localhost:3000/api/plan/${Plan_ID}`);
+          const response = await axios.get(`https://nodejsbackenddailies.onrender.com/api/plan/${Plan_ID}`);
           this.updatename = response.data.name,
           this.updatepercent = response.data.percent,
           this.updateactive = response.data.active,
@@ -293,7 +293,7 @@
       // Function Update Admin
       async UpdatePlan() {
         try {
-          const response = await axios.put(`http://localhost:3000/api/update-plan/${this.Plan_ID}`, {
+          const response = await axios.put(`https://nodejsbackenddailies.onrender.com/api/update-plan/${this.Plan_ID}`, {
             name: this.updatename,
             percent: this.updatepercent,
             active: this.updateactive,

@@ -179,7 +179,7 @@ export default {
         // Function Show Module
         async ShowModules() {
             try {
-                const response = await axios.get('http://localhost:3000/api/select-module');
+                const response = await axios.get('https://nodejsbackenddailies.onrender.com/api/select-module');
                 if (Array.isArray(response.data)) {
                     this.modules_s = response.data;
                 } else {
@@ -193,7 +193,7 @@ export default {
         // Function Create Admin
         async CreateModule() {
             try {
-                const response = await axios.post('http://localhost:3000/api/create-module', {
+                const response = await axios.post('https://nodejsbackenddailies.onrender.com/api/create-module', {
                     module_name: this.modulename
                 });
                 console.log(response.data);
@@ -242,7 +242,7 @@ export default {
 
     async DeleteModule(Module_ID) {
       try {
-        const response = await axios.delete(`http://localhost:3000/api/delete-module/${Module_ID}`);
+        const response = await axios.delete(`https://nodejsbackenddailies.onrender.com/api/delete-module/${Module_ID}`);
         console.log(response.data);
         Swal.fire({
           title: 'ລົບລ້າງ!',
@@ -275,7 +275,7 @@ export default {
       const params = new URLSearchParams();
       params.append('module_name', this.searchQuery);
 
-      fetch(`http://localhost:3000/api/search-module?${params.toString()}`)
+      fetch(`https://nodejsbackenddailies.onrender.com/api/search-module?${params.toString()}`)
         .then((response) => response.json())
         .then((data) => {
           this.modules_s = data;
@@ -290,7 +290,7 @@ export default {
      async ShowModuleItem(Module_ID){
       this.Module_ID = Module_ID;
       try {
-        const response = await axios.get(`http://localhost:3000/api/module/${Module_ID}`);
+        const response = await axios.get(`https://nodejsbackenddailies.onrender.com/api/module/${Module_ID}`);
         this.updatemodulename = response.data.module_name
       } catch (error){
         console.error(error.response.data);
@@ -300,7 +300,7 @@ export default {
     // Function Update Module
     async UpdateModule() {
       try {
-        const response = await axios.put(`http://localhost:3000/api/update-module/${this.Module_ID}`, {
+        const response = await axios.put(`https://nodejsbackenddailies.onrender.com/api/update-module/${this.Module_ID}`, {
           module_name: this.updatemodulename
         });
         console.log(response.data);
